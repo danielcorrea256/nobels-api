@@ -1,8 +1,8 @@
-const { getByYear } = require('./dataModels')
+const { getByFilter } = require('./dataModels')
 
-async function getNobels(req, res, year){
+async function getNobels(req, res, filters){
     try {
-        const nobels = await getByYear(year)
+        const nobels = await getByFilter(filters)
         if(!nobels){
             res.writeHead(404, {'Content-Type': 'application/json'})
             res.end(JSON.stringify({message: 'Data not found'}))

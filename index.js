@@ -4,9 +4,13 @@ const { getNobels } = require('./dataControllers')
 
 const server = http.createServer((req, res) => {
     const urlRequest = new URL(req.url, `http://${req.headers.host}`)
-    if(urlRequest) {
-        const year = urlRequest.searchParams.get('year')
-        getNobels(req,res,year)
+    if(urlRequest && req.method === 'GET') {
+        const year = urlRequest.searchParams.getAll('year')
+        const category = urlRequest.searchParams.getAll('category')
+
+        const filters = { year, category}
+
+        getNobels(req,res,filters)
     } else {
         res.writeHead(404, {'Content-Type': 'application/json'})
         res.end(JSON.stringify({message: 'I dont understand your request'}))
