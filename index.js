@@ -4,7 +4,7 @@ const { getNobels } = require('./dataControllers')
 
 const server = http.createServer((req, res) => {
     const urlRequest = new URL(req.url, `http://${req.headers.host}`)
-    if(urlRequest && req.method === 'GET') {
+    if(req.url.match(/\/api\/search.*/) && req.method === 'GET') {
         const year = urlRequest.searchParams.getAll('year')
         const category = urlRequest.searchParams.getAll('category')
 
